@@ -17,7 +17,7 @@ def CCI(coin):
  df = pd.DataFrame(btc_ohlcv, columns=['datetime', 'open', 'high', 'low', 'close', 'volume'])
  TP = (df['high'] + df['low'] + df['close'])/3      
  SMA = TP.rolling(15).mean()
- MAD = TP.rolling(15).apply(lambda x: pd.Series(x).mad())
+ MAD = TP.rolling(15).apply(lambda x: (pd.Series(x) - pd.Series(x).mean()).abs().mean())
  CCI = ((TP - SMA) / (0.015 * MAD))
  return CCI[14]
 def BOLL(coin):
